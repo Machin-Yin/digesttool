@@ -6,6 +6,6 @@ obj = main.o dealcmdpara.o sm3.o
 $(prom): $(obj)
 	$(cc) -o $(prom) $(obj)
 %.o: %.c $(deps)
-	$(cc) -c $< -o $@ -g
+	$(cc) -c $< -o $@
 clean:
 	rm -rf $(obj) $(prom)
