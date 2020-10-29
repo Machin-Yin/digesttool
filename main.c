@@ -39,7 +39,6 @@ int main(int argc, char *argv[])
             strcpy(file, optarg);
             break;
         default:
-            printf("default\n");
             printf("Command parameter error, use -h for help.\n");
             printf("eg: %s -h\n", argv[0]);
             return ret;
@@ -48,14 +47,6 @@ int main(int argc, char *argv[])
 
     if (path[0] && file[0])
     {
-        printf("two para\n");
-        printf("path: %s\n", path);
-        printf("file: %s\n", file);
-        // if(!strcmp(path, "/"))
-        // {
-        //     printf("The path can't be \"/\"\n");
-        //     return ret;
-        // }
         strcpy(tmp, file);
         if (strstr(tmp, "/"))
         {
@@ -71,10 +62,10 @@ int main(int argc, char *argv[])
                     return -1;
                 }
             }
-            // printf("*p: %s", *p);
         }
-
-        ret = get_filelist(path, file);
+        printf("扫描中……\n");
+        get_filelist(path, file);
+        printf("扫描结束！\n");
     }
     else if (file[0])
     {

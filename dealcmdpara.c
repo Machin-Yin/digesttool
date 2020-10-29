@@ -26,8 +26,6 @@ char *filter_list[] = {
 
 int get_filelist(const char *dirname, char *filepath)
 {
-	printf("get_filelist\n");
-	printf("dirname: %s\n", dirname);
 	int ret = -1;
 	int is_filter = -1;
 	int i = 0;
@@ -89,7 +87,6 @@ int get_filelist(const char *dirname, char *filepath)
 		{
 			sprintf(path, "%s%s", dirname, filename->d_name);
 		}
-		printf("path: %s\n", path);
 
 		struct stat s;
 		lstat(path, &s);
@@ -255,47 +252,40 @@ static int endwith(char *src, char *str)
  */
 int file_kind(char *filename)
 {
-	printf("file_kind filename: %s\n", filename);
 	int ret = 0;
 	int fd;
 
 	if (!endwith(filename, ".ko"))
 	{
 		ret = 2;
-		printf(".ko ret: %d\n\n", ret);
 		return ret;
 	}
 
 	if (!endwith(filename, ".o"))
 	{
 		ret = 0;
-		printf("file_kind ret: %d\n\n", ret);
 		return ret;
 	}
 
 	if (check_shell(filename) == 0)
 	{
 		ret = 1;
-		printf("check_shell ret: %d\n\n", ret);
 		return ret;
 	}
 
 	if (check_python(filename) == 0)
 	{
 		ret = 1;
-		printf("check_python ret: %d\n\n", ret);
 		return ret;
 	}
 
 	if (elf_check(filename) == 0)
 	{
 		ret = 3;
-		printf("elf_check ret: %d\n\n", ret);
 	}
 	else
 	{
 		ret = 0;
-		printf("elf_check ret: %d\n\n", ret);
 	}
 
 	return ret;
@@ -334,12 +324,10 @@ int check_shell(const char *filename)
        || is_begin_with(tmp, "/bin/env zsh") == 0 \
        || is_begin_with(tmp, "/bin/env ksh") == 0)
     {
-        printf("%s is shell\n", filename);
         return 0; // is shell file
     }
     else
     {
-        printf("%s not shell\n", filename);
         return 1; // not shell file
     }
 }
@@ -379,14 +367,10 @@ int check_python(const char *filename)
 	   || is_end_with(filename, ".pyc") == 0 \
 	   || is_end_with(filename, ".pyo") == 0)
     {
-		printf("buf: %s\n", buf);
-        printf("%s is python\n", filename);
         return 0; // is python file
     }
     else
     {
-		printf("buf: %s\n", buf);
-        printf("%s not python\n", filename);
         return 1; // not python file
     }
 }
