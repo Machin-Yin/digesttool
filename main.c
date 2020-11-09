@@ -6,6 +6,8 @@
 
 #include "dealcmdpara.h"
 
+#define TOOL_VERSION "1.0.1"
+
 int main(int argc, char *argv[])
 {
     int ret = -1;
@@ -16,16 +18,21 @@ int main(int argc, char *argv[])
     char *p = NULL;
     unsigned char digest_value[65] = {0};
 
-    while ((opt = getopt(argc, argv, "p:f:h")) != -1)
+    while ((opt = getopt(argc, argv, "p:f:hv")) != -1)
     {
         switch (opt)
         {
+		case 'v':
+			printf("version: %s\n", TOOL_VERSION);
+			return 0;
         case 'h':
             printf("用法：\n");
-            printf("    1: %s -h\n", argv[0]);
-            printf("    2: %s -f /home/test.so\n", argv[0]);
-            printf("    3: %s -p /lib -f /home/filelist\n", argv[0]);
+            printf("    1: %s -v\n", argv[0]);
+            printf("    2: %s -h\n", argv[0]);
+            printf("    3: %s -f /home/test.so\n", argv[0]);
+            printf("    4: %s -p /lib -f /home/filelist\n", argv[0]);
             printf("单参数：\n");
+            printf("    -v	版本\n");
             printf("    -h	帮助\n");
             printf("    -f	后跟要计算摘要值文件的全路径\n");
             printf("双参数：\n");
@@ -47,6 +54,12 @@ int main(int argc, char *argv[])
 
     if (path[0] && file[0])
     {
+		if(path[0] != '/')
+        {
+            printf("Please use full path follow \"-p\"!\n");
+            return -1;
+        }
+
         strcpy(tmp, file);
         if (strstr(tmp, "/"))
         {

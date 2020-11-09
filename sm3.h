@@ -22,7 +22,7 @@ typedef struct
 } sm3_context;
 
 
-#define rol(x,n) ((x << n) | ((x & 0xFFFFFFFF) >> (32 - n)))
+#define rol(x,n) ((x << n%32) | ((x & 0xFFFFFFFF) >> (32 - n%32)))
 /*
 inline int rol(uint32_t operand, uint8_t width){ 
 	 asm volatile("rol %%cl, %%eax" 

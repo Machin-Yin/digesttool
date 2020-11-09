@@ -331,6 +331,7 @@ int sm3_file( const char *path, unsigned char output[SM3_DIGEST_SIZE] )
     if( ( f = fopen( path, "rb" ) ) == NULL )
         return( 1 );
 
+    memset(&ctx, 0x00, sizeof(sm3_context));
     sm3_starts( &ctx );
 
     while( ( n = fread( buf, 1, sizeof( buf ), f ) ) > 0 )
